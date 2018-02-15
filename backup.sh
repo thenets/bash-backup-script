@@ -79,7 +79,7 @@ done
 echo "[ ok ] Backup complete!"
 
 # Remove backups older than day
-FILE_TO_REMOVE=$(find $OUT_DIR -maxdepth 1 -type f -mmin +$REMOVE_FILES_OLDER_THAN_X_DAYS)
+FILE_TO_REMOVE=$(find $OUT_DIR -maxdepth 1 -type f -mtime +$REMOVE_FILES_OLDER_THAN_X_DAYS)
 if [ ! -z "$FILE_TO_REMOVE" ]; then echo "Removing old files"; fi
 for F in $FILE_TO_REMOVE; do
     rm -f $F
