@@ -1162,7 +1162,7 @@ function db_list
 {
     local DIR_DST=$(normalize_path "$1")
 
-    print " > Listing \"$DIR_DST\"... "
+    #print " > Listing \"$DIR_DST\"... "
 
     if [[ "$DIR_DST" == "/" ]]; then
         DIR_DST=""
@@ -1173,8 +1173,8 @@ function db_list
         print "FAILED\n"
         ERROR_STATUS=1
         return
-    else
-        print "DONE\n"
+    # else
+    #     print "DONE\n"
     fi
 
     #Looking for the biggest file size
@@ -1203,7 +1203,8 @@ function db_list
 
         if [[ $TYPE == "folder" ]]; then
             FILE=$(echo -e "$FILE")
-            $PRINTF " [D] %-${padding}s %s\n" "$SIZE" "$FILE"
+            #$PRINTF " [D] %-${padding}s %s\n" "$SIZE" "$FILE"
+            $PRINTF " %s/\n" "$FILE"
         fi
 
     done < "$OUT_FILE"
@@ -1221,7 +1222,7 @@ function db_list
 
         if [[ $TYPE == "file" ]]; then
             FILE=$(echo -e "$FILE")
-            $PRINTF " [F] %-${padding}s %s\n" "$SIZE" "$FILE"
+            $PRINTF " %s\n" "$FILE"
         fi
 
     done < "$OUT_FILE"
