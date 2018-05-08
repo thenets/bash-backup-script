@@ -47,7 +47,7 @@ fi
 if [ -d "$ORIGIN_DIR" ] && [ "$(find $ORIGIN_DIR -maxdepth 1 -type d)" ]; then
     echo "[ ok ] ORIGIN_DIR='$ORIGIN_DIR' is valid..."
 else
-    echo "[fail] The ORIGIN_DIR='$ORIGIN_DIR' doesn't exist or doesn't have any folder!" 
+    echo "[fail] The ORIGIN_DIR='$ORIGIN_DIR' doesn't exist or doesn't have any folder!"
     exit
 fi
 
@@ -69,6 +69,8 @@ for D_PATH in $DIR_TO_BACKUP; do
     # Check if backup already exists for the same $CURRENT_DATE
     if [ -f $OUT_FILE ]; then
         echo "[skip] Backup $OUT_FILE already exist."
+    elif [[ $D_NAME = *"docker"* ]]; then
+        echo "[skip] Ignoring $ORIGIN_DIR dir."
     else
         # Create backup
         echo "[....] Compressing $D_NAME..."
