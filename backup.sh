@@ -94,7 +94,6 @@ if [ -f ~/.dropbox_uploader ]; then
         D_NAME="${D_NAME}" | sed 's/\///g'
         FILE_NAME=$D_NAME"_"$CURRENT_DATE".tar.gz"
         OUT_FILE=$OUT_DIR""$FILE_NAME | sed 's/\/\//\//g'
-        OUT_FILE=$OUT_DIR""$(basename $OUT_FILE)
 
         # Upload data to Dropbox
         if [[ $D_NAME = *"docker"* ]]; then
