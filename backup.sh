@@ -95,13 +95,15 @@ if [ -f ~/.dropbox_uploader ]; then
         FILE_NAME=$D_NAME"_"$CURRENT_DATE".tar.gz"
         OUT_FILE=$OUT_DIR""$FILE_NAME | sed 's/\/\//\//g'
 
+        cd $OUT_DIR
+
         # Upload data to Dropbox
         if [[ $D_NAME = *"docker"* ]]; then
             # Ignore Dropbox dir
             echo "[skip] Ignoring  $D_NAME..."
         else
             echo "[....] Uploading $FILE_NAME..."
-            $DIR/dropbox_uploader.sh upload $OUT_FILE ./latest/
+            $DIR/dropbox_uploader.sh upload $FILE_NAME ./latest/
         fi
     done
     echo "[ ok ] Upload complete!"
