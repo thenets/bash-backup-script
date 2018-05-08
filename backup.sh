@@ -68,6 +68,7 @@ for D_PATH in $DIR_TO_BACKUP; do
     D_NAME=${D_PATH/$ORIGIN_DIR/}
     D_NAME="${D_NAME}" | sed 's/\///g'
     OUT_FILE=$OUT_DIR""$D_NAME"_"$CURRENT_DATE".tar.gz"
+    OUT_FILE=$OUT_DIR""$(basename $OUT_FILE)
 
     # Check if backup already exists for the same $CURRENT_DATE
     if [ -f $OUT_FILE ]; then
@@ -78,7 +79,7 @@ for D_PATH in $DIR_TO_BACKUP; do
         # Create backup
         echo "[....] Compressing $D_NAME..."
         cd $ORIGIN_DIR
-        tar -zcf $OUT_FILE $D_NAME
+        tar -czf $OUT_FILE $D_NAME
     fi
 done
 echo "[ ok ] Backup complete!"
@@ -92,7 +93,8 @@ if [ -f ~/.dropbox_uploader ]; then
         D_NAME=${D_PATH/$ORIGIN_DIR/}
         D_NAME="${D_NAME}" | sed 's/\///g'
         FILE_NAME=$D_NAME"_"$CURRENT_DATE".tar.gz"
-        OUT_FILE=$OUT_DIR""$FILE_NAME
+        OUT_FILE=$OUT_DIR""$FILE_NAME | sed 's/\/\//\//g'
+        OUT_FILE=$OUT_DIR""$(basename $OUT_FILE)
 
         # Upload data to Dropbox
         if [[ $D_NAME = *"docker"* ]]; then
@@ -104,7 +106,7 @@ if [ -f ~/.dropbox_uploader ]; then
         fi
     done
     echo "[ ok ] Upload complete!"
-else 
+else
     echo "[skip] No config file for Dropbox upload"
 fi
 echo ""
