@@ -14,6 +14,9 @@ dd if=/dev/zero of=$DIR/origin/sample/file2 bs=1K count=128
 dd if=/dev/zero of=$DIR/origin/sample/file3 bs=1K count=128
 
 # # Start backup process
+echo ""
+echo ""
+echo "STARTING MAIN PROCESS"
 $DIR/backup.sh $DIR/origin/ $DIR/latest/
 
 # # Remove all files

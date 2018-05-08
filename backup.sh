@@ -83,29 +83,31 @@ for D_PATH in $DIR_TO_BACKUP; do
 done
 echo "[ ok ] Backup complete!"
 
-set -x
 # Upload to Dropbox
-echo ""
 echo "[    ] Uploading to Dropbox"
-$DIR/dropbox_uploader.sh delete latest
-$DIR/dropbox_uploader.sh mkdir latest
-for D_PATH in $DIR_TO_BACKUP; do
-    D_NAME=${D_PATH/$ORIGIN_DIR/}
-    D_NAME="${D_NAME}" | sed 's/\///g'
-    FILE_NAME=$D_NAME"_"$CURRENT_DATE".tar.gz"
-    OUT_FILE=$OUT_DIR""$FILE_NAME
+if [ -f ~/.dropbox_uploader ]; then
+    $DIR/dropbox_uploader.sh delete latest
+    $DIR/dropbox_uploader.sh mkdir latest
+    for D_PATH in $DIR_TO_BACKUP; do
+        D_NAME=${D_PATH/$ORIGIN_DIR/}
+        D_NAME="${D_NAME}" | sed 's/\///g'
+        FILE_NAME=$D_NAME"_"$CURRENT_DATE".tar.gz"
+        OUT_FILE=$OUT_DIR""$FILE_NAME
 
-    # Upload data to Dropbox
-    if [[ $D_NAME = *"docker"* ]]; then
-        # Ignore Dropbox dir
-        echo "[skip] Ignoring  $D_NAME..."
-    else
-        echo "[....] Uploading $FILE_NAME..."
-        $DIR/dropbox_uploader.sh upload $OUT_FILE ./latest/
-    fi
-done
-echo "[ ok ] Upload complete!"
-set +x
+        # Upload data to Dropbox
+        if [[ $D_NAME = *"docker"* ]]; then
+            # Ignore Dropbox dir
+            echo "[skip] Ignoring  $D_NAME..."
+        else
+            echo "[....] Uploading $FILE_NAME..."
+            $DIR/dropbox_uploader.sh upload $OUT_FILE ./latest/
+        fi
+    done
+    echo "[ ok ] Upload complete!"
+else 
+    echo "[skip] No config file for Dropbox upload"
+fi
+echo ""
 
 # Remove backups older than day
 FILE_TO_REMOVE=$(find $OUT_DIR -maxdepth 1 -type f -mtime +$REMOVE_FILES_OLDER_THAN_X_DAYS)
