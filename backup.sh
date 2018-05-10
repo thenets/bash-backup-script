@@ -72,6 +72,8 @@ for D_PATH in $DIR_TO_BACKUP; do
     # Check if backup already exists for the same $CURRENT_DATE
     if [ -f $OUT_FILE ]; then
         echo "[skip] Backup $OUT_FILE already exist."
+    elif [[ $D_NAME = *"docker"* ]]; then
+        echo "[skip] Ignoring $ORIGIN_DIR dir."
     else
         # Create backup
         echo "[....] Compressing $D_NAME..."
