@@ -17,7 +17,7 @@ dd if=/dev/zero of=$DIR/origin/sample/file3 bs=1K count=128
 echo ""
 echo ""
 echo "STARTING MAIN PROCESS"
-$DIR/backup.sh $DIR/origin/ $DIR/latest/
+$DIR/backup.sh $DIR/origin $DIR/latest
 
 # # Remove all files
 rm -Rf $DIR/origin $DIR/latest
